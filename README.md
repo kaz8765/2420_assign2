@@ -179,7 +179,7 @@ Important troubleshooting commands:
 - sudo systemctl daemon-reload
 - caddy reload --config /etc/caddy/Caddyfile
 
-![Script](images/test_screens.PNG)
-![Script](images/test_api.PNG)
+![Script](images/test_screens.png)
+![Script](images/test_api.png)
 
 
