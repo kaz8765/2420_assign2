@@ -7,9 +7,9 @@
 
 1. Create an account on Digital Ocean (https://www.digitalocean.com/)
 2. Open Windows terminal to generate ssh keys by typing ssh-keygen
-3. Create a file in which to save the key (i.e. /Users/<username/.ssh/)
-4. Copy the public key using the command: cat ~/.ssh/<key_name.pub
-	Where <key_name> is the name given for your key
+3. Create a file in which to save the key (i.e. /Users/(username/.ssh/)
+4. Copy the public key using the command: cat ~/.ssh/(key_name.pub)
+	Where (key_name) is the name given for your key
 6. Go to Settings in Digital Ocean then Security
 7. Click  Add SSH Key
 8. Paste key
@@ -43,12 +43,12 @@
 ## Step 4 Create a new user on droplet, do this for both droplets
 
 1. From terminal on the host machine
-2. Type ssh -i ~/.ssh/<key_name_on_machine> root@<IP address of droplet>
-3. Type useradd -ms /bin/bash <username>
-4. Type usermod -aG sudo <username>
-5. Type passwd <username>
+2. Type ssh -i ~/.ssh/(key_name_on_machine) root@(IP address of droplet)
+3. Type useradd -ms /bin/bash (username)
+4. Type usermod -aG sudo (username)
+5. Type passwd (username)
 6. Enter password
-7. Run rsync --archive --chown=<username>:<username> ~/.ssh /home/<username> to move ssh keys
+7. Run rsync --archive --chown=(username):(username) ~/.ssh /home/(username) to move ssh keys
 8. Disable root access by changing root permission to no in /etc/ssh/sshd_config
 9. Run sudo apt update and sudo apt upgrade
 10. Run sudo systemctl restart ssh
@@ -98,24 +98,25 @@ start()
 5. Move both your html and src directory to both of your servers using sftp:
 
 6. cd to where the directory assign-two located.
-7. sftp -i ~/.ssh/DO2_key <user>@<ubuntu-1 or ubuntu-2 droplet ip address>
+7. sftp -i ~/.ssh/DO2_key (user)@(ubuntu-1 or ubuntu-2 droplet ip address)
 8. put -r 2420-assign-two
 
 
 9. Copy /html/index.html inside assign-two directory:
 - cd to 2420-assign-two directory:cd 2420-assign-two
-- Make directory /var/www: sudo mkdir -p /var/www/<load balancer ip address>/
-- Copy the index.html in var/www: sudo cp -r html /var/www/<load balancer server ip address>/
+- Make directory /var/www: sudo mkdir -p /var/www/(load balancer ip address)/
+- Copy the index.html in var/www: sudo cp -r html /var/www/(load balancer server ip address)/
 
 ## Step 8 Add Caddy Configuration
 1. sudo mkdir /etc/caddy
 2. sudo vim /etc/caddy/Caddyfile
 <pre>
-http://<load balancer ip address> {
-  root * /var/www/<server load balancer ip address)
+http://(load balancer ip address) {
+  root * /var/www/(server load balancer ip address)
   file_server
   reverse_proxy /api localhost:5050
-}</pre>
+}
+</pre>
 
 ## Step 9 Create Caddy Service
 1. sudo vim /etc/systemd/system/caddy.service
@@ -132,7 +133,8 @@ TimeoutStopSec=5
 KillMode=mixed
 
 [Install]
-WantedBy=multi-user.target</pre>
+WantedBy=multi-user.target
+</pre>
 
 3. sudo systemctl daemon-reload
 4. sudo systemctl start caddy.service
@@ -147,7 +149,8 @@ WantedBy=multi-user.target</pre>
 ## Step 11 Install hello_web
 1. Create hello_web.service file: sudo vim /etc/systemd/system/hello_web.service
 2. Add content:
-<pre>[Unit]
+<pre>
+[Unit]
 Description=To run the node application so that load balancer can access
 After=network-online.target
 Wants=network-online.target
@@ -170,13 +173,13 @@ WantedBy=multi-user.target
 - systemctl start hello_web.service
 
 4. Visit load balancer and refresh to see messages from both servers: http://146.190.12.35/
-5. Can also test <above url>/api
+5. Can also test (above url)/api
 
 Important troubleshooting commands:
 - sudo systemctl daemon-reload
 - caddy reload --config /etc/caddy/Caddyfile
 
-![Script](test_screens.PNG/useradd.PNG)
-![Script](test_api.PNG/useradd.PNG)
+![Script](images/test_screens.PNG)
+![Script](images/test_api.PNG)
 
 
